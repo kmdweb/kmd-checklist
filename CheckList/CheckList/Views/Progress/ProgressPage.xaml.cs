@@ -1,14 +1,6 @@
 ﻿using com.kmd.Models;
 using com.kmd.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -52,17 +44,19 @@ namespace com.kmd.Views {
 
 
         private void OnFinishTapped (object sender, EventArgs e) {
-            var image = ((Image) sender);
-            var item = image.Source.BindingContext as Item;
-            var row = image.Parent.Parent;
+            var fimage = ((Image) sender);
+            var item = fimage.Source.BindingContext as Item;
+            var row = fimage.Parent.Parent;
             var statusImg = row.FindByName<Image> ("StatusImg");
             var totalTime = row.FindByName<Label> ("TotalTime");
 
+            fimage.IsVisible = false;
+
             item.Status = Item.ItemStatus.Completed;
-            statusImg.IsVisible = false;
+            statusImg.Source = item.StatusIcon;
+
             totalTime.Text = item.VTotalTime;
             totalTime.IsVisible = true;
-            image.Source = item.StatusIcon;
         }
 
         private void OnStatusImgTapped (object sender, EventArgs e) {
@@ -80,110 +74,5 @@ namespace com.kmd.Views {
             }
             image.Source = item.StatusIcon;
         }
-
-        #region Refresh items on any action
-        
-        //private void OnFinishTapped (object sender, EventArgs e) {
-        //    var image = ((Image) sender);
-        //    var item = image.Source.BindingContext as Item;
-        //    if (item.Status != Item.ItemStatus.Completed) {
-        //        item.Status = Item.ItemStatus.Completed;
-        //        viewModel.LoadItemsCommand.Execute (this);
-        //    }
-        //}
-
-        //private void OnStatusImgTapped (object sender, EventArgs e) {
-        //    var image = ((Image) sender);
-        //    var item = image.Source.BindingContext as Item;
-        //    switch (item.Status) {
-        //        case Item.ItemStatus.Pending:
-        //            item.Status = Item.ItemStatus.InProgress;
-        //            break;
-        //        case Item.ItemStatus.InProgress:
-        //            item.Status = Item.ItemStatus.Pending;
-        //            break;
-        //        default:
-        //            return;
-        //    }
-        //    viewModel.LoadItemsCommand.Execute (this);
-        //}
-
-        #endregion
-
     }
-
-
-    #region progresss view model - auto generated
-
-    //class ProgressViewModel : INotifyPropertyChanged {
-    //    public ObservableCollection<Item> Items { get; }
-    //    public ObservableCollection<Grouping<string, Item>> ItemsGrouped { get; }
-
-    //    public ProgressViewModel () {
-    //        Items = new ObservableCollection<Item> (new []
-    //        {
-    //            new Item { Text = "Baboon", Detail = "Africa & Asia" },
-    //            new Item { Text = "Capuchin Monkey", Detail = "Central & South America" },
-    //            new Item { Text = "Blue Monkey", Detail = "Central & East Africa" },
-    //            new Item { Text = "Squirrel Monkey", Detail = "Central & South America" },
-    //            new Item { Text = "Golden Lion Tamarin", Detail= "Brazil" },
-    //            new Item { Text = "Howler Monkey", Detail = "South America" },
-    //            new Item { Text = "Japanese Macaque", Detail = "Japan" },
-    //        });
-
-    //        var sorted = from item in Items
-    //                     orderby item.Text
-    //                     group item by item.Text [0].ToString () into itemGroup
-    //                     select new Grouping<string, Item> (itemGroup.Key, itemGroup);
-
-    //        ItemsGrouped = new ObservableCollection<Grouping<string, Item>> (sorted);
-
-    //        RefreshDataCommand = new Command (
-    //            async () => await RefreshData ());
-    //    }
-
-    //    public ICommand RefreshDataCommand { get; }
-
-    //    async Task RefreshData () {
-    //        IsBusy = true;
-    //        //Load Data Here
-    //        await Task.Delay (2000);
-
-    //        IsBusy = false;
-    //    }
-
-    //    bool busy;
-    //    public bool IsBusy {
-    //        get { return busy; }
-    //        set {
-    //            busy = value;
-    //            OnPropertyChanged ();
-    //            ((Command) RefreshDataCommand).ChangeCanExecute ();
-    //        }
-    //    }
-
-
-    //    public event PropertyChangedEventHandler PropertyChanged;
-    //    void OnPropertyChanged ([CallerMemberName]string propertyName = "") =>
-    //        PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
-
-    //    public class Item {
-    //        public string Text { get; set; }
-    //        public string Detail { get; set; }
-
-    //        public override string ToString () => Text;
-    //    }
-
-    //    public class Grouping<K, T> : ObservableCollection<T> {
-    //        public K Key { get; private set; }
-
-    //        public Grouping (K key, IEnumerable<T> items) {
-    //            Key = key;
-    //            foreach (var item in items)
-    //                this.Items.Add (item);
-    //        }
-    //    }
-    //}
-    
-    #endregion
 }

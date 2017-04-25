@@ -1,4 +1,6 @@
-﻿using com.kmd.Views;
+﻿using com.kmd.Models;
+using com.kmd.Services;
+using com.kmd.Views;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -35,5 +37,21 @@ namespace com.kmd {
                 }
             };
         }
+
+        protected override void OnSleep () {
+            base.OnSleep ();
+            DependencyService.Get<IDataStore<Item>> ().SyncAsync ();
+        }
+
+        protected override void OnResume () {
+            base.OnResume ();
+            DependencyService.Get<IDataStore<Item>> ().PullLatestAsync();
+        }
+
+        protected override void OnStart () {
+            base.OnStart ();
+            DependencyService.Get<IDataStore<Item>> ().PullLatestAsync ();
+        }
+
     }
 }

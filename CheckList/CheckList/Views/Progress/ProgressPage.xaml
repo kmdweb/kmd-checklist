@@ -4,21 +4,21 @@
              x:Class="com.kmd.Views.ProgressPage"
              Title="ListView"
              x:Name="ProgressPage">
-    
-<ContentPage.ToolbarItems>
-    <ToolbarItem Text="Add Item" Clicked="AddItem_Clicked" Icon="add_g.png" />
-</ContentPage.ToolbarItems>
-    
-<ContentPage.Content>
-    <ListView x:Name="ProgressListView"
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Item" Clicked="AddItem_Clicked" Icon="add_g.png" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ListView x:Name="ProgressListView"
             ItemsSource="{Binding Items}"
             ItemSelected="OnItemSelected"
             VerticalOptions="FillAndExpand"
-            HasUnevenRows="true"
+            HasUnevenRows="True"
             IsPullToRefreshEnabled="true"
             IsRefreshing="{Binding IsBusy, Mode=OneWay}"
             RefreshCommand="{Binding LoadItemsCommand}">
-    <!--
+            <!--
     <ListView.Header>
       <StackLayout Padding="10" 
                    Orientation="Horizontal"
@@ -33,8 +33,8 @@
     </ListView.Header>
     -->
 
-    <!--Built in Cells-->
-    <!--
+            <!--Built in Cells-->
+            <!--
     <ListView.ItemTemplate>
       <DataTemplate>
         <TextCell Text="{Binding Text}"
@@ -43,69 +43,63 @@
     </ListView.ItemTemplate>
     -->
 
-        <!--Custom View Cells-->
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell Appearing="Cell_Appearing">
-                    <StackLayout Padding="10" Orientation="Horizontal">
-                        <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
-                            <Label Text="{Binding Text}"
-                                   LineBreakMode="WordWrap"
-                                   VerticalOptions="CenterAndExpand"
-                                   VerticalTextAlignment="Center"
-                                   FontAttributes="Italic"
-                                   FontSize="Medium"
-                                   Style="{DynamicResource ListItemTextStyle}" />
-                            
-                            <!--
-                            <Label Text="{Binding VTimeInCurrentStatus}"
-                               LineBreakMode="NoWrap"
-                               Style="{DynamicResource ListItemTextStyle}"
-                               FontSize="13" />
-                            -->
-                            
-                        </StackLayout>
-                        <StackLayout>
-                            <Label Text="{Binding VTotalTime}" x:Name="TotalTime"
-                                   Style="{DynamicResource ListItemTextStyle}"
-                                   FontSize="Small"
-                                   VerticalOptions="CenterAndExpand"
-                                   VerticalTextAlignment="Center"
-                                   Margin="15, 5, 15, 5"
-                                   IsVisible="{Binding IsFinished}">
-                            </Label>
-                        </StackLayout>
-                        <StackLayout>
-                            <Image Source="{Binding StatusIcon}"  x:Name="StatusImg" 
-                                   HeightRequest="32" WidthRequest="32" 
-                                   Margin="15, 5, 15, 5" Aspect="AspectFill" 
-                                   HorizontalOptions="CenterAndExpand" >
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+            <!--Custom View Cells-->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Appearing="Cell_Appearing">
+                        <StackLayout Padding="10" Orientation="Horizontal">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="8*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{Binding Text}"
+                                       LineBreakMode="WordWrap"
+                                       VerticalTextAlignment="Center"
+                                       FontAttributes="Italic"
+                                       FontSize="Medium"
+                                       Style="{DynamicResource ListItemTextStyle}" Grid.Column="0" Grid.Row="0" />
+
+                                <Label Text="{Binding VTotalTime}" x:Name="TotalTime"
+                                       FontSize="Small"
+                                       VerticalTextAlignment="Center"
+                                       Margin="15, 5, 15, 5"
+                                       IsVisible="{Binding IsFinished}" Grid.Column="2" Grid.Row="0">
+                                </Label>
+
+                                <Image Source="{Binding StatusIcon}"  x:Name="StatusImg" 
+                                       HeightRequest="32" WidthRequest="32"
+                                       HorizontalOptions="Center"
+                                       Margin="15, 5, 15, 5" Grid.Column="1" Grid.Row="0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
                                             Tapped="OnStatusImgTapped"
                                             NumberOfTapsRequired="1" />
-                                </Image.GestureRecognizers>
-                            </Image>
-                        </StackLayout>
-                        <StackLayout>
-                            <Image Source="Stop.png" x:Name="FinishImg" 
-                                   HeightRequest="32" WidthRequest="32" 
-                                   Margin="15, 5, 15, 5" Aspect="AspectFill"
-                                   HorizontalOptions="CenterAndExpand"
-                                   IsVisible="{Binding CanShowStop}">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Image Source="Stop.png" x:Name="FinishImg"
+                                       HeightRequest="32" WidthRequest="32"
+                                       Margin="15, 5, 15, 5"
+                                       HorizontalOptions="Center"
+                                       IsVisible="{Binding CanShowStop}" Grid.Column="2" Grid.Row="0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
                                             Tapped="OnFinishTapped"
                                             NumberOfTapsRequired="1" />
-                                </Image.GestureRecognizers>
-                            </Image>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
                         </StackLayout>
-                    </StackLayout>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
 
-        <!--
+            <!--
         <ListView.Footer>
           <StackLayout Padding="10"
                        Orientation="Horizontal"
@@ -120,6 +114,6 @@
         </ListView.Footer>
         -->
 
-    </ListView>
-</ContentPage.Content>
+        </ListView>
+    </ContentPage.Content>
 </ContentPage>

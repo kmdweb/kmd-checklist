@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CheckList.Utils;
+using com.kmd.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-
-using com.kmd.Models;
-
 using Xamarin.Forms;
 
 [assembly: Dependency (typeof (com.kmd.Services.MockDataStore))]
@@ -53,11 +54,32 @@ namespace com.kmd.Services {
         }
 
         public Task<bool> PullLatestAsync () {
+            try {
+                string str = DependencyService.Get<IFileOperations> ().LoadText ("checklist-store") ?? string.Empty;
+                Dictionary<string, object> dict = JsonConvert.DeserializeObject<Dictionary<string, object>> (str);
+                if (dict != null) {
+                    items = JsonConvert.DeserializeObject<List<Item>> (dict ["items"]?.ToString () ?? string.Empty);
+                    if(items != null)
+                        isInitialized = true;
+                }
+            }
+            catch (Exception ex) {
+                Debug.WriteLine ("Pull-latest Error....: " + ex.ToString ());
+            }
             return Task.FromResult (true);
         }
 
 
         public Task<bool> SyncAsync () {
+            try {
+                Dictionary<string, object> dict = new Dictionary<string, object> ();
+                dict ["items"] = JsonConvert.SerializeObject (items);
+                string data = JsonConvert.SerializeObject (dict);
+                DependencyService.Get<IFileOperations> ().SaveText ("checklist-store", data);
+            }
+            catch(Exception ex) {
+                Debug.WriteLine ("Sync-Async Error....: " + ex.ToString ());
+            }
             return Task.FromResult (true);
         }
 

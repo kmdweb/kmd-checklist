@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="com.kmd.Views.ItemDetailPage" 
+             Title="Task Details" >
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Delete" Clicked="DeleteItem_Clicked"  Icon="trash_w.png"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="{Binding Item.Text}" 
+                   FontSize="Large" TextColor="Green" 
+                   LineBreakMode="WordWrap" 
+                   HorizontalOptions="StartAndExpand" />
+            <Label Text="{Binding Item.Description}" 
+                   FontSize="Medium" TextColor="Orange" 
+                   FontAttributes="Italic" LineBreakMode="WordWrap" 
+                   HorizontalOptions="StartAndExpand" />
+            <StackLayout>
+                <Grid HorizontalOptions="StartAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Created" FontSize="Medium" Grid.Row="0" Grid.Column="0" Style="{DynamicResource CaptionStyle}" />
+                    <Label Text="{Binding Item.VCreated}" Grid.Row="0" Grid.Column="1" TextColor="Crimson" />
+
+                    <Label Text="Status" FontSize="Medium" Grid.Row="1" Grid.Column="0" Style="{DynamicResource CaptionStyle}" />
+                    <Label Text="{Binding Item.Status}" Grid.Row="1" Grid.Column="1" TextColor="Crimson" />
+
+                    <Label Text="Last updated" FontSize="Medium" Grid.Row="2" Grid.Column="0" Style="{DynamicResource CaptionStyle}" />
+                    <Label Text="{Binding Item.VLastModifiedOn}" Grid.Row="2" Grid.Column="1" TextColor="Crimson" />
+
+                    <!--<Label Text="Time in current state" FontSize="Medium" Grid.Row="4" Grid.Column="0" Style="{DynamicResource CaptionStyle}" />
+                    <Label Text="{Binding Item.VTimeInCurrentStatus}" Grid.Row="4" Grid.Column="1" TextColor="Crimson" />-->
+
+                    <Label Text="Time taken to complete" FontSize="Medium" Grid.Row="3" Grid.Column="0"  Style="{DynamicResource CaptionStyle}"/>
+                    <Label Text="{Binding Item.VTotalTime}" Grid.Row="3" Grid.Column="1" TextColor="Crimson" />
+
+                </Grid>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="com.kmd.Views.ProgressPage"
+             Title="ListView"
+             x:Name="ProgressPage">
+    
+<ContentPage.ToolbarItems>
+    <ToolbarItem Text="Add Item" Clicked="AddItem_Clicked" Icon="add_g.png" />
+</ContentPage.ToolbarItems>
+    
+<ContentPage.Content>
+    <ListView x:Name="ProgressListView"
+            ItemsSource="{Binding Items}"
+            ItemSelected="OnItemSelected"
+            VerticalOptions="FillAndExpand"
+            HasUnevenRows="true"
+            IsPullToRefreshEnabled="true"
+            IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+            RefreshCommand="{Binding LoadItemsCommand}">
+    <!--
+    <ListView.Header>
+      <StackLayout Padding="10" 
+                   Orientation="Horizontal"
+                   HorizontalOptions="FillAndExpand"
+                   BackgroundColor="#dadada">
+        <Label Text="Header"
+               HorizontalTextAlignment="Center"
+               HorizontalOptions="FillAndExpand"
+               TextColor="Black"
+               FontAttributes="Bold"/>
+      </StackLayout>
+    </ListView.Header>
+    -->
+
+    <!--Built in Cells-->
+    <!--
+    <ListView.ItemTemplate>
+      <DataTemplate>
+        <TextCell Text="{Binding Text}"
+                  Detail="{Binding Description}"/>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+    -->
+
+        <!--Custom View Cells-->
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell Appearing="Cell_Appearing">
+                    <StackLayout Padding="10" Orientation="Horizontal">
+                        <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                            <Label Text="{Binding Text}"
+                                   LineBreakMode="WordWrap"
+                                   VerticalOptions="CenterAndExpand"
+                                   VerticalTextAlignment="Center"
+                                   FontAttributes="Italic"
+                                   FontSize="Medium"
+                                   Style="{DynamicResource ListItemTextStyle}" />
+                            
+                            <!--
+                            <Label Text="{Binding VTimeInCurrentStatus}"
+                               LineBreakMode="NoWrap"
+                               Style="{DynamicResource ListItemTextStyle}"
+                               FontSize="13" />
+                            -->
+                            
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="{Binding VTotalTime}" x:Name="TotalTime"
+                                   Style="{DynamicResource ListItemTextStyle}"
+                                   FontSize="Small"
+                                   VerticalOptions="CenterAndExpand"
+                                   VerticalTextAlignment="Center"
+                                   Margin="15, 5, 15, 5"
+                                   IsVisible="{Binding IsFinished}">
+                            </Label>
+                        </StackLayout>
+                        <StackLayout>
+                            <Image Source="{Binding StatusIcon}"  x:Name="StatusImg" 
+                                   HeightRequest="32" WidthRequest="32" 
+                                   Margin="15, 5, 15, 5" Aspect="AspectFill" 
+                                   HorizontalOptions="CenterAndExpand" >
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                            Tapped="OnStatusImgTapped"
+                                            NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </StackLayout>
+                        <StackLayout>
+                            <Image Source="Stop.png" x:Name="FinishImg" 
+                                   HeightRequest="32" WidthRequest="32" 
+                                   Margin="15, 5, 15, 5" Aspect="AspectFill"
+                                   HorizontalOptions="CenterAndExpand"
+                                   IsVisible="{Binding CanShowStop}">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                            Tapped="OnFinishTapped"
+                                            NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+        <!--
+        <ListView.Footer>
+          <StackLayout Padding="10"
+                       Orientation="Horizontal"
+                       HorizontalOptions="FillAndExpand"
+                       BackgroundColor="#dadada">
+            <Label Text="Footer" 
+                   HorizontalTextAlignment="Center" 
+                   HorizontalOptions="FillAndExpand" 
+                   TextColor="Black"
+                   FontAttributes="Bold"/>
+          </StackLayout>
+        </ListView.Footer>
+        -->
+
+    </ListView>
+</ContentPage.Content>
+</ContentPage>

@@ -5,19 +5,31 @@
              Title="Task Details" >
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Delete" Clicked="DeleteItem_Clicked"  Icon="trash_w.png"/>
+        <ToolbarItem Text="Delete" Clicked="DeleteItem_Clicked"  Icon="delete.png" x:Name="BtnDelete" />
+        <ToolbarItem Text="Edit" Clicked="EditItem_Clicked" Icon="edit_c.png" x:Name="BtnEdit"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
         <StackLayout Spacing="20" Padding="15">
             <Label Text="{Binding Item.Text}" 
                    FontSize="Large" TextColor="Green" 
-                   LineBreakMode="WordWrap" 
+                   LineBreakMode="WordWrap" x:Name="LText"
                    HorizontalOptions="StartAndExpand" />
+            <Entry Text="{Binding Item.Text}" 
+                   FontSize="Large" TextColor="Green" 
+                   x:Name="EText" 
+                   IsVisible="False">
+            </Entry>
             <Label Text="{Binding Item.Description}" 
-                   FontSize="Medium" TextColor="Orange" 
+                   FontSize="Medium" TextColor="Orange" x:Name="LDesc"
                    FontAttributes="Italic" LineBreakMode="WordWrap" 
                    HorizontalOptions="StartAndExpand" />
+            <Editor Text="{Binding Item.Description}" 
+                    FontSize="Medium" TextColor="Orange" x:Name="EDesc"
+                    HeightRequest="20"
+                    FontAttributes="Italic"
+                    IsVisible="False">
+            </Editor>
             <StackLayout>
                 <Grid HorizontalOptions="StartAndExpand">
                     <Grid.RowDefinitions>

@@ -6,10 +6,10 @@ using com.kmd.ViewModels;
 using Xamarin.Forms;
 
 namespace com.kmd.Views {
-    public partial class ItemsPage : ContentPage {
+    public partial class ListItemsPage : ContentPage {
         ItemsViewModel viewModel;
 
-        public ItemsPage () {
+        public ListItemsPage () {
             InitializeComponent ();
 
             BindingContext = viewModel = new ItemsViewModel ();
@@ -20,14 +20,14 @@ namespace com.kmd.Views {
             if (item == null)
                 return;
 
-            await Navigation.PushAsync (new ItemDetailPage (new ItemDetailViewModel (item)));
+            await Navigation.PushAsync (new ViewItemPage (new ItemDetailViewModel (item)));
 
             // Manually deselect item
             ItemsListView.SelectedItem = null;
         }
 
         async void AddItem_Clicked (object sender, EventArgs e) {
-            await Navigation.PushAsync (new NewItemPage ());
+            await Navigation.PushAsync (new ItemDetailPage ());
         }
 
         protected override void OnAppearing () {

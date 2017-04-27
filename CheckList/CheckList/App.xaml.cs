@@ -8,6 +8,11 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace com.kmd {
     public partial class App : Application {
+
+        public static  int ScreenWidth { get; set; }
+        public static  int ScreenHeight { get; set; }
+        public static  float ScreenDensity { get; set; }
+
         public App () {
             InitializeComponent ();
 

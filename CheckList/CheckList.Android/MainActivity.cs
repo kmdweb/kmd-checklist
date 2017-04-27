@@ -14,6 +14,24 @@ namespace com.kmd.Droid {
             global::Xamarin.Forms.Forms.Init (this, bundle);
 
             LoadApplication (new App ());
+
+            App.ScreenWidth = (int) (Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density);
+            App.ScreenHeight = (int) (Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
+            App.ScreenDensity = Resources.DisplayMetrics.Density;
+        }
+
+        protected override void OnResume () {
+            base.OnResume ();
+            App.ScreenWidth = (int) (Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density);
+            App.ScreenHeight = (int) (Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
+            App.ScreenDensity = Resources.DisplayMetrics.Density;
+        }
+
+        protected override void OnRestart () {
+            base.OnRestart ();
+            App.ScreenWidth = (int) (Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density);
+            App.ScreenHeight = (int) (Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
+            App.ScreenDensity = Resources.DisplayMetrics.Density;
         }
     }
 }

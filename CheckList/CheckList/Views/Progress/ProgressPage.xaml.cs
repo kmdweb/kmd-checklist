@@ -15,7 +15,7 @@ namespace com.kmd.Views {
         }
 
         async void AddItem_Clicked (object sender, EventArgs e) {
-            await Navigation.PushAsync (new NewItemPage ());
+            await Navigation.PushAsync (new ItemDetailPage ());
         }
 
         async void OnItemSelected (object sender, SelectedItemChangedEventArgs args) {
@@ -23,7 +23,7 @@ namespace com.kmd.Views {
             if (item == null)
                 return;
 
-            await Navigation.PushAsync (new ItemDetailPage (new ItemDetailViewModel (item)));
+            await Navigation.PushAsync (new ViewItemPage (new ItemDetailViewModel (item)));
 
             // Manually deselect item
             ProgressListView.SelectedItem = null;

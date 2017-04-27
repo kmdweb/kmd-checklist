@@ -18,13 +18,13 @@ namespace com.kmd.ViewModels {
             Items = new ObservableRangeCollection<Item> ();
             LoadItemsCommand = new Command (async () => await ExecuteLoadItemsCommand ());
 
-            MessagingCenter.Subscribe<NewItemPage, Item> (this, "AddItem", async (obj, item) => {
+            MessagingCenter.Subscribe<ItemDetailPage, Item> (this, "AddItem", async (obj, item) => {
                 var _item = item as Item;
                 Items.Add (_item);
                 await DataStore.AddItemAsync (_item);
             });
 
-            MessagingCenter.Subscribe<ItemDetailPage, Item> (this, "DeleteItem", async (obj, item) => {
+            MessagingCenter.Subscribe<ViewItemPage, Item> (this, "DeleteItem", async (obj, item) => {
                 var _item = item as Item;
                 Items.Remove (_item);
                 await DataStore.DeleteItemAsync (_item);
